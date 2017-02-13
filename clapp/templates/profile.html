@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{%  load staticfiles %}
+
+{% block page %}
+
+	{% if request.user == profile.user %}
+		<form method="POST">
+			{% csrf_token %}
+			<div class="jumbotron text-center">
+				<img src="{% if profile.avatar %} {{ profile.avatar }} {% else %} {% static 'img/avatar.png' %} {% endif %}" class="img-circle" height="120" width="120">
+				<h1><b>{{ profile.user.username }}</b></h1>
+				<input class="form-control" name="slogan" value="{{ profile.slogan }}" placeholder="enter your personal slogan">
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h3 class="text-uppercase"><b>About {{ profile.user.username }}</b></h3>
+					<hr/>
+					<input class="form-control" name="about" value="{{ profile.about }}" placeholder="anything about you">
+					<br/>
+					<h3 class="text-uppercase"><b>Contact</b></h3>
+					<hr/>
+					<h6 class="text-uppercase"><b>Email</b></h6>
+					<input class="form-control" name="email" value="{{ profile.email }}" placeholder="Enter you email address">
+					<br/>
+					<h6 class="text-uppercase"><b>Phone</b></h6>
+					<input class="form-control" name="phone" value="{{ profile.phone }}" placeholder="Enter you phone number with country code Ex: +16264780936">
+					<br/>
+					<button class="btn btn-success" type="submit">Update</button>
+				</div>
+			</div>
+		</form>
+	{% else %}
+		<div class="jumbotron text-center">
+			<img src="{% if profile.avatar %} {{ profile.avatar }} {% else %} {% static 'img/avatar.png' %} {% endif %}" class="img-circle" height="120" width="120">
+			<h1><b>{{ profile.user.username }}</b></h1>
+			<p>{{ profile.slogan }}</p>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h3 class="text-uppercase text-center"><b>About {{ profile.user.username }}</b></h3>
+				<hr/>
+				<p>{{ profile.about }}</p>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if gigs %}
+		<h3 class="text-uppercase" style="margin-top:30px; margin-bottom:20px; color:#3C3C3C"><b>{{ profile.user.username }}'s gigs:</b></h3>
+		<div class="row">
+			{% for gig in gigs %}
+				<div class="col-md-3" style="height: 320px;">
+					<div class="thumbnail" id="photo-{{ forloop.counter }}">
+						<div style="height: 165px; margin-top: 8px; margin-bottom: 8px;">
+							<!-- when loading photo from media fail, use this "onerror" method to choose a default photo -->
+							{% if gig.photo %}
+								<a href="{% url 'gig_detail' gig.id %}" ><img src="{{ gig.photo.url }}" onerror="this.src='/static/img/coming-soon.jpg'" style="max-height: 174px; max-width: 235px;"></a>
+							{% else %}
+								<a href="{% url 'gig_detail' gig.id %}" ><img src="/static/img/pikachu.jpg" style="max-height: 174px; max-width: 235px;""></a>
+							{% endif %}
+						</div>
+						<hr style="margin-top: 20px; margin-bottom: 0px;">
+						<div class="caption">
+							<p><a href="{% url 'gig_detail' gig.id %}" id="title-{{ forloop.counter }}">{{ gig.title }}</a></p>
+							<!-- <p><a href="{% url 'gig_detail' gig.id %}">{{ gig.title | truncatechars:32 }}</a></p> -->
+							<p>
+								<span>by <a href="{% url 'profile' gig.user.username %}" style="color: blue"><b>{{ gig.user.username }}</b></a></span>
+								<b class="green pull-right" id="price-{{ forloop.counter }}">${{ gig.price }}</b>
+							</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		
+		{% if gigs.count > 20 %}
+			<div style="margin-bottom: 20px;">	
+				<div id="page-nav" style="text-align:center"></div>
+			</div>
+		{% endif %}
+	{% endif %}
+
+		
+	<!-- pagination list from here -->
+	<!-- {% if gigs.has_other_pages %}
+	<br>
+		<div class="text-center">
+			<ul class="pagination">
+			    {% if gigs.has_previous %}
+			    	<li><a href="?page={{ gigs.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in gigs.paginator.page_range %}
+			    	{% if gigs.number == i %}
+			      		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			    	{% else %}
+			        	<li><a href="?page={{ i }}">{{ i }}</a></li>
+			    	{% endif %}
+			    {% endfor %}
+			    {% if gigs.has_next %}
+			    	<li><a href="?page={{ gigs.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			</ul>
+		</div>
+	{% endif %} -->
+
+{% endblock %}

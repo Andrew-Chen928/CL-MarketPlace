@@ -1,0 +1,103 @@
+/* .代表class, #代表ID */
+/* .代表class, #代表ID */
+/* .代表class, #代表ID */
+/* .代表class, #代表ID */
+/* .代表class, #代表ID */
+/* .代表class, #代表ID */
+
+/*.container {
+    width: 1100px;
+}*/
+
+html, body {
+    padding-top: 30px;
+    height: 100%;
+}
+
+/*doesn't work for admin page ?*/
+th.field-title {
+  width: 500px;
+}
+
+a {
+    color: #323232;
+}
+
+a:hover {
+    color: #0bb536;
+}
+
+#category a {
+    padding: 5px 15px;
+}
+
+#body {
+    background-color: #f7f7f7;
+}
+
+/*#body .banner {
+    width: 100%;
+    margin-bottom: 20px;
+}*/
+
+.banner {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+
+.green {
+    color: green;
+}
+
+
+/* From reference */
+#id_wrapper {
+    /* 設定高度最小為100%, 如果內容區塊很多, 可以長大 */
+    min-height: 97%;
+    /* 位置設為relative, 作為footer區塊位置的參考 */
+    position: relative;
+    background-color: #F8F8FF;
+
+    /*background: url("/static/img/bg2.jpg") 50% no-repeat fixed;
+    background-size: 100%;*/
+}
+
+#id_header {
+    /* 設定header的高度 */
+    height: 40px;
+    box-sizing: border-box;
+}
+
+#id_content {
+    /* 留出header及footer區塊的空間 */
+    /*padding-top: 40px;*/
+    padding-bottom: 35px;
+}
+
+#footer {
+    padding: 15px 0;
+}
+
+#id_footer {
+    /* 設定footer的高度 */
+    height: 35px;
+    box-sizing: border-box;
+    /* 設定footer絕對位置在底部 */
+    position: absolute;
+    bottom: 0;
+    /* 展開footer寬度 */
+    width: 100%;
+}
+
+.line{
+   height:1px;
+   background-color: lightgray;
+}
+/*.light-theme{
+    text-align:center;
+}*/
+
+
+

@@ -1,0 +1,62 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}{% trans "Log in" %}{% endblock %}
+
+{% block page %}
+
+<div class="col-sm-4 col-sm-offset-4" style="margin-top: 20px">
+    <a href="{% url 'social:begin' 'facebook' %}?next={{ '/' }}" class="btn btn-primary" style="width:100%; float: left; margin-left:0px; margin-bottom:10px">FACEBOOK LOGIN</a>
+    
+    <div class="center-block" style="margin-bottom: 10px; text-align: center;">
+        <h4 style="color:gray">
+            or
+        </h4>
+         <div class="line"></div>
+    </div>
+    <!-- <hr size="8px" align="center" width="100%">  -->
+    
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <input class="btn btn-success" style="width:100%; float: left; margin-left:0px; margin-top:5px;" type="submit" value="{% trans 'Log in' %}" />
+    </form>
+    <input type="hidden" name="next" value="{{ next }}" />
+</div>
+
+<div class="col-sm-4 col-sm-offset-4" style="margin-top:20px">
+    <p style="font-size: 15px">{% trans "Forgot your password?" %} &nbsp;<a href="{% url 'auth_password_reset' %}" style="color:red">{% trans "Reset it" %}</a>.</p>
+    <p style="font-size: 15px">{% trans "Not a member?" %} &nbsp;<a href="{% url 'registration_register' %}" style="color:blue">{% trans "Register Now" %}</a>.</p>
+</div>
+
+
+{% endblock %}
+
+
+{% comment %}
+**registration/login.html**
+
+It's your responsibility to provide the login form in a template called
+registration/login.html by default. This template gets passed four
+template context variables:
+
+``form``
+    A Form object representing the login form. See the forms
+    documentation for more on Form objects.
+
+``next``
+    The URL to redirect to after successful login. This may contain a
+    query string, too.
+
+``site``
+    The current Site, according to the SITE_ID setting. If you don't
+    have the site framework installed, this will be set to an instance
+    of RequestSite, which derives the site name and domain from the
+    current HttpRequest.
+
+``site_name``
+    An alias for site.name. If you don't have the site framework
+    installed, this will be set to the value of
+    request.META['SERVER_NAME']. For more on sites, see The
+    "sites" framework.
+{% endcomment %}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{%load staticfiles%}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CL MarkerPlace</title>
+
+	
+	<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+	
+
+	<!-- JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.simplePagination.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/pagination.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+	
+	
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link type="text/css" rel="stylesheet" href="{% static 'css/slide.css' %}"/>
+
+	<link type="text/css" rel="stylesheet" href="{% static 'css/simplePagination.css' %}"/>
+
+	<link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="{% static 'js/common.js' %}"></script> 
+
+	<script src="{% static 'js/clamp.min.js' %}"></script> 
+
+
+
+	<!--Start of Zendesk Chat Script-->
+	<script type="text/javascript">
+		window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+		d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+		_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+		$.src="//v2.zopim.com/?4KkIaf7moe6U5g643BHbCBnVAm11LnOR";z.t=+new Date;$.
+		type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+	</script>
+	<!--End of Zendesk Chat Script-->
+</head>
+
+
+<body>
+	<div id="id_wrapper">
+    	<div id="id_header">
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="navbar-inverse">
+					<div class="container">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/"><img = src="{% static 'img/logo.png' %}" height="23"></a>
+						</div>	
+						<form class="navbar-form navbar-left" role="search" method="GET" action="/search/">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" name="title" class="form-control" placeholder="Find services">
+									<span class="input-group-btn">
+										<button class="btn btn-success">Find</button>
+									</span>
+								</div>
+							</div>
+						</form>
+						<ul class="nav navbar-nav navbar-right">
+							{% if user and not user.is_anonymous %}
+								<li class="dropdown">
+									<a href="# class=dropdown-toggle" data-toggle="dropdown" 
+										role="button" aria-haspopup="true" aria-expanded="fase">
+										<img src="{% if user.profile and user.profile.avatar %} {{ user.profile.avatar }} {% else %} {% static 'img/avatar.png' %} {% endif %}" class="img-circle" height="22" width="22">&nbsp;
+										{{ user.get_full_name|default:user.username }} <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="{% url 'create_gig' %}">Create a gig</a></li>
+										<li><a href="{% url 'my_gigs' %}">My Gigs</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'my_sellings' %}">My Sellings</a></li>
+										<li><a href="{% url 'my_buyings' %}">My Buyings</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'profile' user.username %}">My Profile</a></li>
+										<li role="separator" class="divider"></li>
+										<!-- <li><a href="{% url 'auth_password_change' %}?next={{'/'}}" style="color:red">Change Password</a></li> -->
+										<li><a href="{% url 'auth:logout' %}?next={{'/'}}">Logout</a></li>
+									</ul>
+								</li>
+							{% else %}
+								<li>
+									<!-- <a href="{% url 'auth_login' %}">Login</a> -->
+									<a href="{% url 'social:begin' 'facebook' %}?next={{ '/' }}" style="margin-right: 5px">FACEBOOK LOGIN</a>
+								</li>
+								<!-- <li>
+									<a href="{% url 'social:begin' 'facebook' %}?next={{ '/' }}" class="btn btn-primary" style="width:100%; float: left; margin-left:0px; margin-bottom:10px">FACEBOOK LOGIN</a>
+								</li> -->
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+				<div id="category">
+					<div class="container">
+						<ul class="nav nav-tabs">
+							<li><a href="/category/all"><b>Show All</b></a></li>
+							<li><a href="/category/graphics-design" ><b>Graphics & Design</b></a></li>
+							<li><a href="/category/digital-marketing"><b>Digital Marketing</b></a></li>
+							<li><a href="/category/video-animation"><b>Video & Animation</b></a></li>
+							<li><a href="/category/music-audio"><b>Music & Audio</b></a></li>
+							<li><a href="/category/programming-tech"><b>Programming & Tech</b></a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div> 
+
+		<div class="container" id="id_content">
+			{% block page %}
+			{% endblock %}
+		</div>
+	
+		<footer id="id_footer">
+			<footer id="footer" class="navbar-inverse">
+				<div class="container">
+					<span style="color:#FFFF37">CL App &copy; &nbsp Made by Chi An Chen.</span>
+				</div>
+			</footer>
+		</footer> 
+		
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page %}
+
+	{% if show_all == "True" %}
+		<div class="gig_pagination"></div>
+	{% endif %}
+	<div id="abgneBlock">
+		<ul class="list">
+			<li><img src="{% static 'img/banner.jpg' %}" >
+			<li><img src="{% static 'img/banner2.jpg' %}" >
+			<li><img src="{% static 'img/banner1.png' %}" >
+			
+		</ul>
+	</div>
+	<div class="row">
+		<!-- <div class="col-md-12">
+			
+			<img src="{% static 'img/banner.jpg' %}" class="banner">
+			
+		</div> -->
+		{% for gig in gigs %}
+			<div class="col-md-3" style="height: 300px">
+				<div class="thumbnail">
+					<div style="height: 165px; margin-top: 8px; margin-bottom: 8px;">
+						<!-- when loading photo from media fail, use this "onerror" method to choose a default photo -->
+						{% if gig.photo %}
+							<a href="{% url 'gig_detail' gig.id %}" id="photo_inside"><img src="{{ gig.photo.url }}" style="max-height: 174px; max-width: 235px;" onerror="this.src='/static/img/coming-soon.jpg'"></a>
+						{% else %}
+							<a href="{% url 'gig_detail' gig.id %}" ><img src="/static/img/pikachu.jpg" style="max-height: 174px; max-width: 235px;""></a>
+						{% endif %}
+					</div>
+					<hr style="margin-top: 10px; margin-bottom: 0px;">
+					<div class="caption">
+						<p><a href="{% url 'gig_detail' gig.id %}" id="title-{{ forloop.counter }}">{{ gig.title }}</a></p>
+						<!-- <p><a href="{% url 'gig_detail' gig.id %}">{{ gig.title | truncatechars:35 }}</a></p> -->
+						<p>
+							<span>by <a href="{% url 'profile' gig.user.username %}" style="color: blue"><b>{{ gig.user.username }}</b></a></span>
+							<b class="green pull-right" id="price-{{ forloop.counter }}">${{ gig.price }}</b>
+						</p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+
+	{% if gigs.count > 20 %}
+		<div style="margin-bottom: 20px;">	
+			<div id="page-nav" style="text-align:center"></div>
+		</div>
+	{% endif %}
+
+{% endblock %}
+
+<!-- pagination list from here -->
+	<!-- {% if gigs.has_other_pages %}
+		<div class="text-center" >
+			<ul class="pagination" style="margin-top:2px;">
+			    {% if gigs.has_previous %}
+			    	<li><a href="?page={{ gigs.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in gigs.paginator.page_range %}
+			    	{% if gigs.number == i %}
+			      		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			    	{% else %}
+			        	<li><a href="?page={{ i }}">{{ i }}</a></li>
+			    	{% endif %}
+			    {% endfor %}
+			    {% if gigs.has_next %}
+			    	<li><a href="?page={{ gigs.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			</ul>
+		</div>	
+	{% endif %} -->

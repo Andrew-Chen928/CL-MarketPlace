@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Registration Successful{% endblock %}
+{% block head %}
+ Registration Completed Successfully
+{% endblock %}
+{% block page %}
+    <h3>
+    	Thank you for registering. <<
+    	<a href="{% url 'auth:login' %}?next={{request.path}}" style="color:blue">Login</a>
+    	 >>
+    </h3>
+    
+   
+    <!-- <a href="/">Login</a>  -->
+{% endblock %}
